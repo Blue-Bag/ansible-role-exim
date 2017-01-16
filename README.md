@@ -1,6 +1,6 @@
 Exim setup
 ========
-[![Build Status](https://travis-ci.org/Blue-Bag/ansible-exim4.svg?branch=master)](https://travis-ci.org/Blue-Bag/ansible-exim4)
+[![Build Status](https://travis-ci.org/Blue-Bag/ansible-role-exim.svg?branch=master)](https://travis-ci.org/Blue-Bag/ansible-role-exim)
 
 Ansible role to install and configure Exim4 on Debian based system.
 
@@ -53,8 +53,9 @@ BSD
 
 Author Information
 ------------------
-Fork: George Boobyer
+George Boobyer
 
+Original base from :
 * Pierre Buyle <buyle@floedesign.ca>
 * Pierre Paul Lefebvre <lefebvre@studioqi.ca>
 
