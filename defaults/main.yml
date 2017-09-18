@@ -2,7 +2,9 @@
 # defaults file for exim4
 exim4_dc_eximconfig_configtype: 'local'
 exim4_dc_other_hostnames: "{{ ansible_hostname }}"
-exim4_dc_local_interfaces: '127.0.0.1 ; ::1'
+#exim4_dc_local_interfaces: '127.0.0.1 ; ::1'
+# if not sending via ipv6
+exim4_dc_local_interfaces: '127.0.0.1'
 exim4_dc_readhost: ''
 exim4_dc_relay_domains: ''
 exim4_dc_minimaldns: 'false'
@@ -13,3 +15,5 @@ exim4_dc_use_split_config: 'false'
 exim4_dc_hide_mailname: ''
 exim4_dc_mailname_in_oh: 'true'
 exim4_dc_localdelivery: 'mail_spool'
+
+exim4_dc_disableipv6: true

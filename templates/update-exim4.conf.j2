@@ -31,3 +31,6 @@ dc_use_split_config="{{ exim4_dc_use_split_config }}"
 dc_hide_mailname="{{ exim4_dc_hide_mailname }}"
 dc_mailname_in_oh="{{ exim4_dc_mailname_in_oh }}"
 dc_localdelivery="{{ exim4_dc_localdelivery }}"
+{% if dc_disableipv6 %}
+disable_ipv6=true
+{% endif %}
