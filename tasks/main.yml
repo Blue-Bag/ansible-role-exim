@@ -8,11 +8,11 @@
 
 
 # Setup/install tasks.
-- include: setup-RedHat.yml
+- import_tasks: setup-RedHat.yml
   static: yes
   when: ansible_os_family == 'RedHat'
 
-- include: setup-Debian.yml
+- import_tasks: setup-Debian.yml
   static: yes
   when: ansible_os_family == 'Debian'
 
