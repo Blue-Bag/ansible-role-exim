@@ -1,5 +1,5 @@
 DKIM_CANON = {{ exim4_dkim.canon }}
 DKIM_SELECTOR = {{ exim4_dkim.selector }}
 DKIM_DOMAIN = {{ exim4_dkim.domain }}
-DKIM_FILE = {{ exim4_dkim.keyfile }}
+DKIM_FILE = {{ exim4_dkim.keypath }}/{{ exim4_dkim.domain }}-private.pem
 DKIM_PRIVATE_KEY = ${if exists{DKIM_FILE}{DKIM_FILE}{0}}
