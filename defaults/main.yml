@@ -17,3 +17,16 @@ exim4_dc_mailname_in_oh: 'true'
 exim4_dc_localdelivery: 'mail_spool'
 
 exim4_dc_disableipv6: true
+
+exim4_dkim:
+  - name: 'Exim-DKIM'
+    implement: false
+    canon: 'relaxed'
+    selector: 'exim'
+    domain: "{{ ansible_hostname }}"
+    generatekey: true
+    regeneratekey: false
+    keysize: 1024
+    keycipher: aes256
+    keypath: '{{ exim_path }}/dkim/'
+    keypassphrase: 'ansibleexim'
