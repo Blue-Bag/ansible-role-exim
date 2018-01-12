@@ -1,0 +1,71 @@
+---
+
+# create key
+# put up local macros
+
+# openssl genrsa -out indigo-herbs.co.uk-private.pem 1024 -outform PEM
+# openssl rsa -in indigo-herbs.co.uk-private.pem -out indigo-herbs.co.uk.pem -pubout -outform PEM
+
+- name: Ensure keypath exists
+  file:
+    path: "{{ item.path }}"
+    state: directory
+    recurse: yes
+    owner: "{{ item.owner }}"
+    group: "{{ item.group }}"
+    mode: "{{ item.mode }}"
+  with_items:
+    - {
+      path: "{{ exim4_dkim.keypath }}",
+      owner: "root",
+      group: "{{ exim_group }}",
+      mode: '0770'
+    }
+  tags:
+    - exim4
+    - dkim
+  become: true
+
+# we could allow the user to override the key generation and provide an existing key
+# we could allow the regeneration of the key
+
+- name: Create key files
+  block:
+    - name: generate private key
+      openssl_privatekey:
+        path: "{{ exim4_dkim.keypath }}/{{ exim4_dkim.domain}}-private.pem"
+        size: "{{ exim4_dkim.keysize | default(1024)}}"
+        force: "{{ exim4_dkim.regeneratekey }}"
+        cipher: "{{ exim4_dkim.keycipher }}"
+        passphrase: "{{ exim4_dkim.keypassphrase}}"
+
+    - name: generate private key
+      openssl_publickey:
+        path: "{{ exim4_dkim.keypath }}/{{ exim4_dkim.domain}}-private.pem"
+        privatekey_path: "{{ exim4_dkim.keypath }}/{{ exim4_dkim.domain}}.pem"
+        privatekey_passphrase: "{{ exim4_dkim.keypassphrase }}"
+        force: "{{ exim4_dkim.regeneratekey }}"
+    - name: set group for private key
+      file:
+        path: "{{ exim4_dkim.keypath }}/{{ exim4_dkim.domain}}-private.pem"
+        owner: "root"
+        group: "{{ exim_group }}"
+        mode: 0440
+      changed_when: False
+  when:
+    - exim4_dkim.generatekey
+    - exim4_dkim.regeneratekey
+  tags:
+    - exim4
+    - dkim
+
+
+- name: Create local macros for dkim
+  template:
+    src: '00_local_macros.j2'
+    dest: "{{ exim_path }}/conf.d/main/00_local_macros"
+  when: (exim4_dkim is defined)
+  tags:
+    - exim4
+    - dkim
+  notify: update exim4.conf
