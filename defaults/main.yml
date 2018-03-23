@@ -19,7 +19,6 @@ exim4_dc_localdelivery: 'mail_spool'
 exim4_dc_disableipv6: true
 
 exim4_dkim:
-  - name: 'Exim-DKIM'
     implement: false
     canon: 'relaxed'
     selector: 'exim'
@@ -30,3 +29,5 @@ exim4_dkim:
     keycipher: aes256
     keypath: '{{ exim_path }}/dkim/'
     keypassphrase: 'ansibleexim'
+
+  # - name: 'Exim-DKIM'

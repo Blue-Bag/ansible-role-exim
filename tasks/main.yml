@@ -51,7 +51,11 @@
     src: passwd.client
     dest: "{{ exim_path }}/passwd.client"
     group: "{{ exim_group }}"
-  when: '{{ ansible_os_family == "Debian" }}'
+  when: 'ansible_os_family == "Debian" '
   tags:
     - exim
   notify: update exim4.conf
+
+- import_tasks: dkim.yml
+  static: yes
+  when: (exim4_dkim.implement)
