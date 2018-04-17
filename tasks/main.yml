@@ -9,11 +9,9 @@
 
 # Setup/install tasks.
 - import_tasks: setup-RedHat.yml
-  static: yes
   when: ansible_os_family == 'RedHat'
 
 - import_tasks: setup-Debian.yml
-  static: yes
   when: ansible_os_family == 'Debian'
 
 
@@ -57,5 +55,4 @@
   notify: update exim4.conf
 
 - import_tasks: dkim.yml
-  static: yes
   when: (exim4_dkim.implement)
