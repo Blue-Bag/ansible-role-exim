@@ -3,6 +3,6 @@
 - name: Ensure exim is installed.
   apt:
     name: "{{ exim_daemon }}"
-    state: installed
+    state: present
     update_cache: yes
     cache_valid_time: 3600
