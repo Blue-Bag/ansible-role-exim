@@ -27,7 +27,7 @@ exim4_dkim:
     regeneratekey: false
     keysize: 1024
     keycipher: aes256
-    keypath: '{{ exim_path }}/dkim/'
+    keypath: '{{ exim_path }}/dkim'
     keypassphrase: 'ansibleexim'
 
   # - name: 'Exim-DKIM'
