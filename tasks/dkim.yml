@@ -32,6 +32,11 @@
 
 - name: Create key files
   block:
+    - name: Install s3cmd.
+      pip:
+        name: pyOpenSSL
+        state: latest
+      become: true
     - name: generate private key
       openssl_privatekey:
         path: "{{ exim4_dkim.keypath }}/{{ exim4_dkim.domain}}-private.pem"
@@ -42,8 +47,8 @@
 
     - name: generate private key
       openssl_publickey:
-        path: "{{ exim4_dkim.keypath }}/{{ exim4_dkim.domain}}-private.pem"
-        privatekey_path: "{{ exim4_dkim.keypath }}/{{ exim4_dkim.domain}}.pem"
+        path: "{{ exim4_dkim.keypath }}/{{ exim4_dkim.domain}}.pem"
+        privatekey_path: "{{ exim4_dkim.keypath }}/{{ exim4_dkim.domain}}-private.pem"
         privatekey_passphrase: "{{ exim4_dkim.keypassphrase }}"
         force: "{{ exim4_dkim.regeneratekey }}"
     - name: set group for private key
@@ -63,8 +68,8 @@
 
 - name: Create local macros for dkim
   template:
-    src: '00_local_macros.j2'
-    dest: "{{ exim_path }}/conf.d/main/00_local_macros"
+    src: '00_local_dkim.j2'
+    dest: "{{ exim_path }}/conf.d/main/00_local_dkim"
   when: (exim4_dkim is defined)
   tags:
     - exim4
