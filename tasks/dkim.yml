@@ -3,9 +3,6 @@
 # create key
 # put up local macros
 
-# openssl genrsa -out indigo-herbs.co.uk-private.pem 1024 -outform PEM
-# openssl rsa -in indigo-herbs.co.uk-private.pem -out indigo-herbs.co.uk.pem -pubout -outform PEM
-
 - name: Display dkim variables
   debug:
     var: exim4_dkim.keypath
