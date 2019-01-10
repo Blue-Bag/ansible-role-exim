@@ -8,12 +8,10 @@
 
 
 # Setup/install tasks.
-- include: setup-RedHat.yml
-  static: yes
+- include_tasks: setup-RedHat.yml
   when: ansible_os_family == 'RedHat'
 
-- include: setup-Debian.yml
-  static: yes
+- include_tasks: setup-Debian.yml
   when: ansible_os_family == 'Debian'
 
 
@@ -28,9 +26,18 @@
     - update exim4.conf
     - restart exim4
 
+- name: Create local macros for dkim
+  template:
+    src: '00_local_macros.j2'
+    dest: "{{ exim_path }}/conf.d/main/00_local_macros"
+  when: (exim4_dkim is defined)
+  tags:
+    - exim4
+  notify: update exim4.conf
+
 - name: Create catch all configuration
   template:
-    src: '01_exim4-config_catch_all'
+    src: '01_exim4-config_catch_all.j2'
     dest: "{{ exim_path }}/conf.d/router/01_exim4-config_catch_all"
   when: (exim4_catch_all_email is defined) and exim4_catch_all_email
   tags:
@@ -48,10 +55,13 @@
 
 - name: Create /etc/passwd.client
   template:
-    src: passwd.client
+    src: 'passwd.client.j2'
     dest: "{{ exim_path }}/passwd.client"
     group: "{{ exim_group }}"
-  when: '{{ ansible_os_family == "Debian" }}'
+  when: 'ansible_os_family == "Debian" '
   tags:
     - exim
   notify: update exim4.conf
+
+- import_tasks: dkim.yml
+  when: (exim4_dkim.implement)

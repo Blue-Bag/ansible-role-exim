@@ -46,6 +46,14 @@ Testing:
    Could also test the configuration file prior to restart:
    exim -bV
 
+
+DKIM
+--------
+# openssl genrsa -out /etc/exim4/dkim/yourdomain.com-private.pem 1024 -outform PEM
+# openssl rsa -in /etc/exim4/dkim/yourdomain.com-private.pem -out /etc/exim4/dkim/yourdomain.com.pem -pubout -outform PEM
+
+Encrypting the key seems to stop exim from signing the mail
+
 License
 -------
 
