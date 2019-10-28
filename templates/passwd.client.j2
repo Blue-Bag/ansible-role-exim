@@ -3,7 +3,7 @@
 #
 # see exim4_passwd_client(5) for more documentation
 #
-# {{ ansible_managed }}
+# {{ ansible_managed | comment }}
 #
 {% if exim4_passwd_client is defined %}
 {% for item in exim4_passwd_client %}
