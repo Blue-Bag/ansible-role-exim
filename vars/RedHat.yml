@@ -4,3 +4,6 @@ exim_daemon: exim
 exim_group: 'mail'
 exim_path: '/etc/exim'
 exim_configuration_file: '/etc/exim/exim.conf'
+
+exim_packages:
+  - python-pip
