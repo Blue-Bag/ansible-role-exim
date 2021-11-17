@@ -51,14 +51,16 @@
         size: "{{ exim4_dkim.keysize | default(1024)}}"
         force: "{{ exim4_dkim.regeneratekey }}"
         cipher: "{{ exim4_dkim.keycipher }}"
-        passphrase: "{{ exim4_dkim.keypassphrase}}"
+# exim doesn't like encrypted keys
+#       passphrase: "{{ exim4_dkim.keypassphrase}}"
 
-    - name: generate private key
+    - name: generate public key
       openssl_publickey:
         path: "{{ exim4_dkim.keypath }}/{{ exim4_dkim.domain}}.pem"
         privatekey_path: "{{ exim4_dkim.keypath }}/{{ exim4_dkim.domain}}-private.pem"
-        privatekey_passphrase: "{{ exim4_dkim.keypassphrase }}"
         force: "{{ exim4_dkim.regeneratekey }}"
+#       privatekey_passphrase: "{{ exim4_dkim.keypassphrase }}"
+
     - name: set group for private key
       file:
         path: "{{ exim4_dkim.keypath }}/{{ exim4_dkim.domain}}-private.pem"
