@@ -1,5 +1,10 @@
 ---
 
+- name: Define exim_packages.
+  set_fact:
+    exim_packages: "{{ __exim_packages | list }}"
+  when: exim_packages is not defined
+
 # create key
 # put up local macros
 - name: Install dependencies

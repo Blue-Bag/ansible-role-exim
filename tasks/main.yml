@@ -4,8 +4,6 @@
 # Include variables and define needed variables.
 - name: Include OS-specific variables.
   include_vars: "{{ ansible_os_family }}.yml"
-  tags: ['always']
-
 
 # Setup/install tasks.
 - include_tasks: setup-RedHat.yml
@@ -13,7 +11,6 @@
 
 - include_tasks: setup-Debian.yml
   when: ansible_os_family == 'Debian'
-
 
 - name: Exim4 Configuration
   template:

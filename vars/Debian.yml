@@ -5,5 +5,5 @@ exim_group: 'Debian-exim'
 exim_path: '/etc/exim4'
 exim_configuration_file: 'update-exim4.conf.conf'
 
-exim_packages:
+__exim_packages:
   - python-pip
