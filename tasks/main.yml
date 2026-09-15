@@ -3,17 +3,14 @@
 
 # Include variables and define needed variables.
 - name: Include OS-specific variables.
-  include_vars: "{{ ansible_os_family }}.yml"
-  tags: ['always']
-
+  include_vars: "{{ ansible_facts['os_family'] }}.yml"
 
 # Setup/install tasks.
 - include_tasks: setup-RedHat.yml
-  when: ansible_os_family == 'RedHat'
+  when: ansible_facts['os_family'] == 'RedHat'
 
 - include_tasks: setup-Debian.yml
-  when: ansible_os_family == 'Debian'
-
+  when: ansible_facts['os_family'] == 'Debian'
 
 - name: Exim4 Configuration
   template:
@@ -58,7 +55,7 @@
     src: 'passwd.client.j2'
     dest: "{{ exim_path }}/passwd.client"
     group: "{{ exim_group }}"
-  when: 'ansible_os_family == "Debian" '
+  when: 'ansible_facts["os_family"] == "Debian" '
   tags:
     - exim
   notify: update exim4.conf
